@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <bean id="userDAO" class="ru.iteco.dao.map.UserDAOImpl">
+    </bean>
+    <bean id="songDAO" class="ru.iteco.dao.map.SongDAOImpl">
+    </bean>
+    <bean id="albumDAO" class="ru.iteco.dao.map.AlbumDAOImpl">
+    </bean>
+    <bean id="artistDAO" class="ru.iteco.dao.map.ArtistDAOImpl">
+    </bean>
+
+    <bean id="userService" class="ru.iteco.service.UserServiceImpl">
+        <constructor-arg type="ru.iteco.dao.UserDAO" ref="userDAO"/>
+    </bean>
+    <bean id="songService" class="ru.iteco.service.SongServiceImpl">
+        <constructor-arg type="ru.iteco.dao.SongDAO" ref="songDAO"/>
+    </bean>
+    <bean id="albumService" class="ru.iteco.service.AlbumServiceImpl">
+        <constructor-arg type="ru.iteco.dao.AlbumDAO" ref="albumDAO"/>
+    </bean>
+    <bean id="artistService" class="ru.iteco.service.ArtistServiceImpl">
+        <constructor-arg type="ru.iteco.dao.ArtistDAO" ref="artistDAO"/>
+    </bean>
+</beans>
