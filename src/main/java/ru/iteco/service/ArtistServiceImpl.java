@@ -2,9 +2,11 @@ package ru.iteco.service;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.stereotype.Service;
 import ru.iteco.dao.ArtistDAO;
 import ru.iteco.model.Artist;
 
+@Service
 public class ArtistServiceImpl implements ArtistService {
 
     private static final Logger logger = LogManager.getLogger(ArtistServiceImpl.class.getName());

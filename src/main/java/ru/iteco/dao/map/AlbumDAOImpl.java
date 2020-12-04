@@ -1,13 +1,14 @@
 package ru.iteco.dao.map;
 
+import org.springframework.stereotype.Repository;
 import ru.iteco.dao.AlbumDAO;
 import ru.iteco.model.Album;
 import ru.iteco.model.Song;
 
 import java.util.HashMap;
-import java.util.Map;
 import java.util.UUID;
 
+@Repository
 public class AlbumDAOImpl extends AbstractDAO<UUID, Album> implements AlbumDAO {
 
     public AlbumDAOImpl() {
