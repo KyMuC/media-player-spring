@@ -1,14 +1,13 @@
 package ru.iteco.dao.map;
 
+import org.springframework.stereotype.Repository;
 import ru.iteco.dao.UserDAO;
 import ru.iteco.model.User;
 
 import java.util.HashMap;
-import java.util.Map;
 import java.util.UUID;
 
-import static java.util.Optional.ofNullable;
-
+@Repository
 public class UserDAOImpl extends AbstractDAO<UUID, User> implements UserDAO {
 
     public UserDAOImpl() {

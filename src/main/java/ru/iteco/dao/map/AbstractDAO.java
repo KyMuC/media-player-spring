@@ -20,7 +20,8 @@ public abstract class AbstractDAO<K extends Serializable, T extends Identifiable
 
     @Override
     public T save(T item) {
-        return items.put(item.getId(), item);
+        items.put(item.getId(), item);
+        return item;
     }
 
     @Override
@@ -40,7 +41,8 @@ public abstract class AbstractDAO<K extends Serializable, T extends Identifiable
 
     @Override
     public T update(T item) {
-        return items.put(item.getId(), item);
+        items.put(item.getId(), item);
+        return item;
     }
 
     @Override

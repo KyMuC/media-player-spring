@@ -1,12 +1,13 @@
 package ru.iteco.dao.map;
 
+import org.springframework.stereotype.Repository;
 import ru.iteco.dao.SongDAO;
 import ru.iteco.model.Song;
 
 import java.util.HashMap;
-import java.util.Map;
 import java.util.UUID;
 
+@Repository
 public class SongDAOImpl extends AbstractDAO<UUID, Song> implements SongDAO {
 
     public SongDAOImpl() {

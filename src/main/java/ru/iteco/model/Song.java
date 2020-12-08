@@ -3,6 +3,9 @@ package ru.iteco.model;
 import java.util.Objects;
 import java.util.UUID;
 
+/**
+ * Song object model.
+ */
 public class Song implements Identifiable<UUID> {
 
     private UUID id;

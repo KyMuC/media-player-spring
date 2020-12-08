@@ -4,6 +4,9 @@ import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
+/**
+ * Album object model.
+ */
 public class Album implements Identifiable<UUID> {
 
     private UUID id;

@@ -7,6 +7,9 @@ import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
+/**
+ * User object model.
+ */
 public class User implements Identifiable<UUID> {
 
     private UUID id;
@@ -46,11 +49,14 @@ public class User implements Identifiable<UUID> {
         return passwordHash;
     }
 
-    public void setPasswordHash(String password) throws NoSuchAlgorithmException {
-        byte[] passwordBytes = password.getBytes(StandardCharsets.UTF_8);
-        MessageDigest md = MessageDigest.getInstance("MD5");
-        byte[] digest = md.digest(passwordBytes);
-        this.passwordHash = new String(digest, StandardCharsets.UTF_8);
+    public void setPasswordHash(String password) {
+        try {
+            byte[] passwordBytes = password.getBytes(StandardCharsets.UTF_8);
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            byte[] digest = md.digest(passwordBytes);
+            this.passwordHash = new String(digest, StandardCharsets.UTF_8);
+        } catch (NoSuchAlgorithmException ignored) {
+        }
     }
 
     public List<Song> getFavouriteSongs() {
