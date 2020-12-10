@@ -4,8 +4,10 @@ import org.springframework.stereotype.Repository;
 import ru.iteco.dao.SongDAO;
 import ru.iteco.model.Song;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Repository
 public class SongDAOImpl extends AbstractDAO<UUID, Song> implements SongDAO {
@@ -15,8 +17,7 @@ public class SongDAOImpl extends AbstractDAO<UUID, Song> implements SongDAO {
     }
 
     @Override
-    public Song getByName(String name) {
-        return items.values().stream().filter(song -> song.getName().equals(name))
-                .findFirst().orElse(null);
+    public Collection<Song> getByName(String name) {
+        return items.values().stream().filter(song -> song.getName().equals(name)).collect(Collectors.toList());
     }
 }

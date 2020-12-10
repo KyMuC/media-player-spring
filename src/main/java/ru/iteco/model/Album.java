@@ -9,9 +9,29 @@ import java.util.UUID;
  */
 public class Album implements Identifiable<UUID> {
 
+    /**
+     * Album's identification.
+     */
     private UUID id;
+
+    /**
+     * Album's name.
+     */
     private String name;
+
+    /**
+     * Songs present in the album.
+     */
     private List<Song> songs;
+
+    public Album() {
+    }
+
+    public Album(UUID id, String name, List<Song> songs) {
+        this.id = id;
+        this.name = name;
+        this.songs = songs;
+    }
 
     public void setId(UUID id) {
         this.id = id;

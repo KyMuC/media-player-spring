@@ -3,6 +3,7 @@ package ru.iteco.model;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
@@ -12,13 +13,50 @@ import java.util.UUID;
  */
 public class User implements Identifiable<UUID> {
 
+    /**
+     * User's identification.
+     */
     private UUID id;
+
+    /**
+     * User's email.
+     */
     private String email;
+
+    /**
+     * User's user name.
+     */
     private String userName;
+
+    /**
+     * Hash of user's password.
+     */
     private String passwordHash;
-    private List<Song> favouriteSongs;
-    private List<Artist> favouriteArtists;
-    private List<Album> favouriteAlbums;
+
+    /**
+     * User's favourite songs.
+     */
+    private List<Song> favouriteSongs = new ArrayList<>();
+
+    /**
+     * User's favourite artists.
+     */
+    private List<Artist> favouriteArtists = new ArrayList<>();
+
+    /**
+     * User's favourite albums.
+     */
+    private List<Album> favouriteAlbums = new ArrayList<>();
+
+    public User(){
+    }
+
+    public User(UUID id, String userName, String password, String email) {
+        this.id = id;
+        this.userName = userName;
+        setPasswordHash(password);
+        this.email = email;
+    }
 
     public void setId(UUID id) {
         this.id = id;

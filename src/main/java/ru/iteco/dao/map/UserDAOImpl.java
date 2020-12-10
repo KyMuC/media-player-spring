@@ -33,7 +33,7 @@ public class UserDAOImpl extends AbstractDAO<UUID, User> implements UserDAO {
     }
 
     @Override
-    public boolean loginExists(String login) {
+    public boolean userNameExists(String login) {
         return items.values().stream().anyMatch(user -> user.getUserName().equals(login));
     }
 }
