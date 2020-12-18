@@ -89,7 +89,9 @@ public class AlbumController {
             return body;
         }
 
-        if (!restAlbumService.updateAlbum(id, body)) {
+        body.setId(id);
+
+        if (!restAlbumService.updateAlbum(body)) {
             body.setErrors(Collections.singletonList(new ObjectError("albumDto",
                     new String[]{"album.notFound"}, null,
                     "No album found with such id.")));

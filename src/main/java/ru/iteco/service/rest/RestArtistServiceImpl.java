@@ -45,8 +45,8 @@ public class RestArtistServiceImpl implements RestArtistService {
     }
 
     @Override
-    public boolean updateArtistInfo(UUID id, ArtistDto body) {
-        Artist artist = artistDAO.getByKey(id);
+    public boolean updateArtistInfo(ArtistDto body) {
+        Artist artist = artistDAO.getByKey(body.getId());
 
         if (artist == null) return false;
 

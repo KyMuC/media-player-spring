@@ -54,8 +54,8 @@ public class RestAlbumServiceImpl implements RestAlbumService {
     }
 
     @Override
-    public boolean updateAlbum(UUID id, AlbumDto body) {
-        Album album = albumDAO.getById(id);
+    public boolean updateAlbum(AlbumDto body) {
+        Album album = albumDAO.getById(body.getId());
 
         if (album == null) return false;
 

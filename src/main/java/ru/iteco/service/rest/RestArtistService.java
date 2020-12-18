@@ -20,7 +20,7 @@ public interface RestArtistService {
     /**
      * API for updating an artist.
      */
-    boolean updateArtistInfo(UUID id, ArtistDto body);
+    boolean updateArtistInfo(ArtistDto body);
 
     /**
      * API for finding artists by name.

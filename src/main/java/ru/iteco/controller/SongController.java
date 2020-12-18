@@ -89,7 +89,9 @@ public class SongController {
             return body;
         }
 
-        if (!restSongService.updateSongInfo(id, body)) {
+        body.setId(id);
+
+        if (!restSongService.updateSongInfo(body)) {
             body.setErrors(Collections.singletonList(new ObjectError("songDto",
                     new String[]{"song.notFound"}, null,
                     "No song found with such id.")));

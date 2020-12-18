@@ -20,7 +20,7 @@ public interface RestSongService {
     /**
      * API for updating a song.
      */
-    boolean updateSongInfo(UUID id, SongDto body);
+    boolean updateSongInfo(SongDto body);
 
     /**
      * API for finding songs by name.

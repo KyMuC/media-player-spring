@@ -20,7 +20,7 @@ public interface RestAlbumService {
     /**
      * API for updating an album.
      */
-    boolean updateAlbum(UUID id, AlbumDto body);
+    boolean updateAlbum(AlbumDto body);
 
     /**
      * API for finding albums by name.

@@ -90,7 +90,9 @@ public class ArtistController {
             return body;
         }
 
-        if (!restArtistService.updateArtistInfo(id, body)) {
+        body.setId(id);
+
+        if (!restArtistService.updateArtistInfo(body)) {
             body.setErrors(Collections.singletonList(new ObjectError("artistDto",
                     new String[]{"artist.notFound"}, null,
                     "No artist found with such id.")));

@@ -58,8 +58,8 @@ public class RestSongServiceImpl implements RestSongService {
     }
 
     @Override
-    public boolean updateSongInfo(UUID id, SongDto body) {
-        Song song = songDAO.getByKey(id);
+    public boolean updateSongInfo(SongDto body) {
+        Song song = songDAO.getByKey(body.getId());
 
         if (song == null) return false;
 
