@@ -22,14 +22,10 @@ public class AlbumServiceImpl implements AlbumService {
     private static final Logger logger = LogManager.getLogger(AlbumServiceImpl.class.getName());
 
     private final AlbumDAO albumDAO;
-    private final ArtistDAO artistDAO;
-    private final UserDAO userDAO;
 
     public AlbumServiceImpl(AlbumDAO albumDAO, ArtistDAO artistDAO, UserDAO userDAO) {
         logger.info("album service creation");
         this.albumDAO = albumDAO;
-        this.artistDAO = artistDAO;
-        this.userDAO = userDAO;
     }
 
     @Override
@@ -59,27 +55,7 @@ public class AlbumServiceImpl implements AlbumService {
 
     @Override
     public Album deleteByKey(UUID id) {
-        Album album = albumDAO.getById(id);
-
-        if (album != null) {
-            Artist artist = artistDAO.getByAlbum(album);
-
-            artist.getAlbums().remove(album);
-            artistDAO.update(artist);
-
-            List<User> users = userDAO.getAll().stream()
-                    .filter(u -> u.getFavouriteAlbums().contains(album))
-                    .collect(Collectors.toList());
-
-            users.forEach(u -> {
-                u.getFavouriteAlbums().remove(album);
-                userDAO.update(u);
-            });
-
-            return albumDAO.deleteByKey(id);
-        }
-
-        return null;
+        return albumDAO.deleteByKey(id);
     }
 
     @Override

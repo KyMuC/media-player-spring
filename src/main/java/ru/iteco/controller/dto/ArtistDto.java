@@ -3,6 +3,7 @@ package ru.iteco.controller.dto;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import org.springframework.validation.ObjectError;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
@@ -36,12 +37,12 @@ public class ArtistDto {
     /**
      * Ids of artist's songs.
      */
-    private List<UUID> songIds;
+    private List<UUID> songIds = new ArrayList<>();
 
     /**
      * Ids of artist's albums.
      */
-    private List<UUID> albumIds;
+    private List<UUID> albumIds = new ArrayList<>();
 
     /**
      * List of errors to report back to the user.

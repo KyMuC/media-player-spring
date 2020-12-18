@@ -54,17 +54,17 @@ public class UserDto {
     /**
      * Ids of user's favourite songs.
      */
-    private List<UUID> favouriteSongsIds;
+    private List<UUID> favouriteSongsIds = new ArrayList<>();
 
     /**
      * Ids of user's favourite artists.
      */
-    private List<UUID> favouriteArtistsIds;
+    private List<UUID> favouriteArtistsIds = new ArrayList<>();
 
     /**
      * Ids of user's favourite albums.
      */
-    private List<UUID> favouriteAlbumsIds;
+    private List<UUID> favouriteAlbumsIds = new ArrayList<>();
 
     /**
      * List of errors to report back to the user.

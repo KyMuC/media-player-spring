@@ -22,7 +22,7 @@ import java.util.UUID;
  * @author Mikhail_Kudimov
  */
 @RestController
-@RequestMapping("/api/album")
+@RequestMapping("/api/v1/album")
 public class AlbumController {
 
     private static final Logger logger = LogManager.getLogger(AlbumController.class.getName());
@@ -40,8 +40,8 @@ public class AlbumController {
      * @param name Name to find albums by
      * @return Albums with specified name or empty album with an error if no albums were found
      */
-    @GetMapping("/info")
-    public Collection<AlbumDto> getAlbums(@RequestParam("q") String name) {
+    @GetMapping("{name}")
+    public Collection<AlbumDto> getAlbums(@PathVariable String name) {
         Collection<AlbumDto> albumDtos = restAlbumService.findByName(name);
 
         if (albumDtos.size() == 0) {
@@ -61,7 +61,7 @@ public class AlbumController {
      * @param body JSON body of album to create
      * @return The newly created album or album with error if JSON format is wrong
      */
-    @PostMapping("/add")
+    @PostMapping
     public AlbumDto addAlbum(@Validated @RequestBody AlbumDto body, BindingResult result,
                              HttpServletResponse httpServletResponse) {
         if (result.hasErrors()) {
@@ -79,8 +79,8 @@ public class AlbumController {
      * @param body JSON body with fields to update
      * @return JSON with updated fields or JSON with fields to update and error if JSON was wrong
      */
-    @PutMapping("/update")
-    public AlbumDto updateAlbum(@RequestParam("id") UUID id, @RequestBody AlbumDto body, BindingResult result,
+    @PutMapping("{id}")
+    public AlbumDto updateAlbum(@PathVariable UUID id, @RequestBody AlbumDto body, BindingResult result,
                                 HttpServletResponse httpServletResponse) {
         albumDtoValidator.validateUpdate(body, result);
         if (result.hasErrors()) {
@@ -103,8 +103,8 @@ public class AlbumController {
      * @param id Id to delete album by
      * @return Empty album with HTTP status of 204 or album with error if album was not found
      */
-    @DeleteMapping("/remove")
-    public AlbumDto removeAlbum(@RequestParam("id") UUID id, HttpServletResponse httpServletResponse) {
+    @DeleteMapping("{id}")
+    public AlbumDto removeAlbum(@PathVariable UUID id, HttpServletResponse httpServletResponse) {
         boolean deleted = restAlbumService.removeAlbum(id);
 
         AlbumDto albumDto = null;

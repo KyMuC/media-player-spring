@@ -3,7 +3,7 @@
 [Запросы для экспорта в Postman][1]
 
 ##### User API:
-POST: http://localhost:8080/api/user/register/
+POST: http://localhost:8080/api/v1/user/
 
 Пример тела запроса:
 
@@ -14,11 +14,11 @@ POST: http://localhost:8080/api/user/register/
         "email": "kymuc@example.com"
     }
 
-GET: http://localhost:8080/api/user/info/?q=<user_name_or_email>
+GET: http://localhost:8080/api/v1/user/<user_name_or_email>
 
 <user_name_or_email> - логин пользователя или его email
 
-PUT: http://localhost:8080/api/user/update/?q=<user_name_or_email>
+PUT: http://localhost:8080/api/v1/user/<user_name_or_email>
 
 Пример тела запроса:
 
@@ -32,12 +32,12 @@ PUT: http://localhost:8080/api/user/update/?q=<user_name_or_email>
 
 В теле запроса могут присутствовать любые поля [UserDto][2], за исключением id.
 
-DELETE: http://localhost:8080/api/user/remove/?q=<user_name_or_email>
+DELETE: http://localhost:8080/api/v1/user/<user_name_or_email>
 
 <user_name_or_email> - логин пользователя или его email
 
 ##### Artist API:
-POST: http://localhost:8080/api/artist/add
+POST: http://localhost:8080/api/v1/artist/
 
 Пример тела запроса:
 
@@ -46,13 +46,13 @@ POST: http://localhost:8080/api/artist/add
         "countryOfOrigin": "Australia"
     }
 
-GET: http://localhost:8080/api/artist/info?q=<artist_name>
+GET: http://localhost:8080/api/v1/artist/<artist_name>
 
 <artist_name> - имя исполнителя
 
 Возвращает список исполнителей с указанным именем
 
-PUT: http://localhost:8080/api/artist/update?id=<artist_id>
+PUT: http://localhost:8080/api/v1/artist/<artist_id>
 
 Пример тела запроса:
 
@@ -64,12 +64,12 @@ PUT: http://localhost:8080/api/artist/update?id=<artist_id>
 
 В теле запроса могут присутствовать любые поля [ArtistDto][3], за исключением id.
 
-DELETE: http://localhost:8080/api/artist/remove?id=<artist_id>
+DELETE: http://localhost:8080/api/v1/artist/<artist_id>
 
 <artist_id> - id исполнителя, которого необходимо удалить
 
 ##### Song API:
-POST: http://localhost:8080/api/song/add/
+POST: http://localhost:8080/api/v1/song/
 
 Пример тела запроса:
 
@@ -80,13 +80,13 @@ POST: http://localhost:8080/api/song/add/
     
 <artist_id> - id существуюшего в системе исполнителя
 
-GET: http://localhost:8080/api/song/info?q=<song_name>
+GET: http://localhost:8080/api/v1/song/<song_name>
 
 <song_name> - имя песни
 
 Возвращает список песен с указанным именем
 
-PUT: http://localhost:8080/api/song/update?id=<song_id>
+PUT: http://localhost:8080/api/v1/song/<song_id>
 
 Пример тела запроса:
 
@@ -98,13 +98,13 @@ PUT: http://localhost:8080/api/song/update?id=<song_id>
 
 В теле запроса могут присутствовать любые поля [SongDto][4], за исключением id.
 
-DELETE: http://localhost:8080/api/song/delete?id=<song_id>
+DELETE: http://localhost:8080/api/v1/song/<song_id>
 
 <song_id> - id песни, которую необходимо удалить
 
 ##### Album API:
 
-POST: http://localhost:8080/api/album/add
+POST: http://localhost:8080/api/v1/album/
 
 Пример тела запроса:
 
@@ -118,13 +118,13 @@ POST: http://localhost:8080/api/album/add
 
 <song_id> - id существующей в системе песни
 
-GET: http://localhost:8080/api/album/info?q=<album_name>
+GET: http://localhost:8080/api/v1/album/<album_name>
 
 <album_name> - имя альбома
 
 Возвращает список альбомов с указанным именем
 
-PUT: http://localhost:8080/api/album/update?id=<album_id>
+PUT: http://localhost:8080/api/v1/album/<album_id>
 
 Пример тела запроса:
 
@@ -136,7 +136,7 @@ PUT: http://localhost:8080/api/album/update?id=<album_id>
 
 В теле запроса могут присутствовать любые поля [AlbumDto][5], за исключением id и artistId.
 
-DELETE: http://localhost:8080/api/album/remove?id=<album_id>
+DELETE: http://localhost:8080/api/v1/album/<album_id>
 
 <album_id> - id альбома, который необходимо удалить
 

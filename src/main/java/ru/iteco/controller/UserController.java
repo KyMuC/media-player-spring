@@ -21,7 +21,7 @@ import java.util.Collections;
  * @author Mikhail_Kudimov
  */
 @RestController
-@RequestMapping("/api/user")
+@RequestMapping("/api/v1/user")
 public class UserController {
 
     private static final Logger logger = LogManager.getLogger(UserController.class.getName());
@@ -39,8 +39,8 @@ public class UserController {
      * @param query Name or email to find user by
      * @return User with such user name or email or user with error if no user was found
      */
-    @GetMapping(value = "/info")
-    public UserDto getUser(@RequestParam(name = "q") String query) {
+    @GetMapping("{query}")
+    public UserDto getUser(@PathVariable String query) {
         UserDto userDto = restUserService.findByUserNameOrEmail(query);
 
         if (userDto == null) {
@@ -58,7 +58,7 @@ public class UserController {
      * @param body JSON body or user to create
      * @return Newly created user or user with error if JSON format was wrong
      */
-    @PostMapping(value = "/register")
+    @PostMapping
     public UserDto registerUser(@Validated @RequestBody UserDto body, BindingResult result,
                                 HttpServletResponse httpServletResponse) {
 
@@ -77,8 +77,8 @@ public class UserController {
      * @param body JSON body with fields to update
      * @return Updated fields of user or user with error if JSON format was wrong
      */
-    @PutMapping(value = "/update")
-    public UserDto updateUserInfo(@RequestParam(name = "q") String query, @RequestBody UserDto body,
+    @PutMapping("{query}")
+    public UserDto updateUserInfo(@PathVariable String query, @RequestBody UserDto body,
                                   BindingResult result, HttpServletResponse httpServletResponse) {
 
         userDtoValidator.validateUpdate(body, result);
@@ -102,8 +102,8 @@ public class UserController {
      * @param query User name or email to delete user by
      * @return Empty user with HTTP status of 204 or user with error if no user was found
      */
-    @DeleteMapping(value = "/remove")
-    public UserDto removeUser(@RequestParam(name = "q") String query, HttpServletResponse httpServletResponse) {
+    @DeleteMapping("{query}")
+    public UserDto removeUser(@PathVariable String query, HttpServletResponse httpServletResponse) {
         boolean deleted = restUserService.removeUser(query);
 
         UserDto userDto = null;

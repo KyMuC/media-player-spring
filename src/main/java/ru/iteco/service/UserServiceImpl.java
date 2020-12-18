@@ -45,10 +45,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User deleteByUserNameOrEmail(String query) {
-        User user = findByUserNameOrEmail(query);
-
-        if (user == null) return null;
-
-        return userDAO.deleteByKey(user.getId());
+        return userDAO.deleteByUserNameOrEmail(query);
     }
 }

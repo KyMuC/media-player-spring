@@ -22,7 +22,7 @@ import java.util.UUID;
  * @author Mikhail_Kudimov
  */
 @RestController
-@RequestMapping("/api/song")
+@RequestMapping("/api/v1/song")
 public class SongController {
 
     private static final Logger logger = LogManager.getLogger(SongController.class.getName());
@@ -37,12 +37,12 @@ public class SongController {
 
     /**
      * Method for finding songs with relevant name.
-     * @param query Name of songs to find
+     * @param name Name of songs to find
      * @return Songs with relevant name or song with error if no song was found
      */
-    @GetMapping("/info")
-    public Collection<SongDto> getSongs(@RequestParam(name = "q") String query) {
-        Collection<SongDto> songDtos = restSongService.findByName(query);
+    @GetMapping("{name}")
+    public Collection<SongDto> getSongs(@PathVariable String name) {
+        Collection<SongDto> songDtos = restSongService.findByName(name);
 
         if (songDtos.size() == 0) {
             SongDto songDto = new SongDto();
@@ -61,7 +61,7 @@ public class SongController {
      * @param body JSON body of song to create
      * @return Newly created song or song with error if JSON format was wrong
      */
-    @PostMapping("/add")
+    @PostMapping
     public SongDto addSong(@Validated @RequestBody SongDto body, BindingResult result,
                            HttpServletResponse httpServletResponse) {
         if (result.hasErrors()) {
@@ -79,8 +79,8 @@ public class SongController {
      * @param body JSON body with fields to update
      * @return JSON with updated fields or song with error if no song was found or JSON was wrong
      */
-    @PutMapping("/update")
-    public SongDto updateSong(@RequestParam("id") UUID id, @RequestBody SongDto body, BindingResult result,
+    @PutMapping("{id}")
+    public SongDto updateSong(@PathVariable UUID id, @RequestBody SongDto body, BindingResult result,
                               HttpServletResponse httpServletResponse) {
         songDtoValidator.validateUpdate(body, result);
         if (result.hasErrors()) {
@@ -103,8 +103,8 @@ public class SongController {
      * @param id Id of song to delete
      * @return Empty song with HTTP status of 204 or song with error if no song was found
      */
-    @DeleteMapping("/delete")
-    public SongDto deleteSong(@RequestParam("id") UUID id, HttpServletResponse httpServletResponse) {
+    @DeleteMapping("{id}")
+    public SongDto deleteSong(@PathVariable UUID id, HttpServletResponse httpServletResponse) {
         boolean deleted = restSongService.removeSong(id);
 
         SongDto songDto = null;

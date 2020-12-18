@@ -42,14 +42,14 @@ public class ArtistDtoValidator implements Validator {
 
         if (errors.hasErrors()) return;
 
-        if (artistDto.getAlbumIds() != null) {
+        if (artistDto.getAlbumIds() != null && artistDto.getAlbumIds().size() > 0) {
             errors.rejectValue("albumIds", "albumIds.notAllowed",
                     "Album references should be created using update API.");
         }
 
         if (errors.hasErrors()) return;
 
-        if (artistDto.getSongIds() != null) {
+        if (artistDto.getSongIds() != null && artistDto.getSongIds().size() > 0) {
             errors.rejectValue("songIds", "songsIds.notAllowed",
                     "Song references should be created using update API.");
         }

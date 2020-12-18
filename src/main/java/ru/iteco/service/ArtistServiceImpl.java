@@ -23,16 +23,10 @@ public class ArtistServiceImpl implements ArtistService {
     private static final Logger logger = LogManager.getLogger(ArtistServiceImpl.class.getName());
 
     private final ArtistDAO artistDAO;
-    private final SongDAO songDAO;
-    private final AlbumDAO albumDAO;
-    private final UserDAO userDAO;
 
     public ArtistServiceImpl(ArtistDAO artistDAO, SongDAO songDAO, AlbumDAO albumDAO, UserDAO userDAO) {
         logger.info("artist service creation");
-        this.albumDAO = albumDAO;
-        this.songDAO = songDAO;
         this.artistDAO = artistDAO;
-        this.userDAO = userDAO;
     }
 
     @Override
@@ -72,29 +66,6 @@ public class ArtistServiceImpl implements ArtistService {
 
     @Override
     public Artist deleteByKey(UUID id) {
-        Artist artist = artistDAO.getByKey(id);
-
-        if (artist != null) {
-            artist.getSongs().forEach(s ->
-                    songDAO.deleteByKey(s.getId())
-            );
-
-            artist.getAlbums().forEach(a ->
-                    albumDAO.deleteByKey(a.getId())
-            );
-
-            List<User> users = userDAO.getAll().stream()
-                    .filter(u -> u.getFavouriteArtists().contains(artist))
-                    .collect(Collectors.toList());
-
-            users.forEach(u -> {
-                u.getFavouriteArtists().remove(artist);
-                userDAO.update(u);
-            });
-
-            return artistDAO.deleteByKey(id);
-        }
-
-        return null;
+        return artistDAO.deleteByKey(id);
     }
 }

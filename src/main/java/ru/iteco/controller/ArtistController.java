@@ -22,7 +22,7 @@ import java.util.UUID;
  * @author Mikhail_Kudimov
  */
 @RestController
-@RequestMapping("/api/artist")
+@RequestMapping("/api/v1/artist")
 public class ArtistController {
 
     private static final Logger logger = LogManager.getLogger(ArtistController.class.getName());
@@ -37,12 +37,12 @@ public class ArtistController {
 
     /**
      * Method for finding artists with relevant name.
-     * @param query Artist name
+     * @param name Artist name
      * @return Artists with specified name or artist with error if no artists were found
      */
-    @GetMapping("/info")
-    public Collection<ArtistDto> getArtists(@RequestParam("q") String query) {
-        Collection<ArtistDto> artistDtos = restArtistService.findByName(query);
+    @GetMapping("{name}")
+    public Collection<ArtistDto> getArtists(@PathVariable String name) {
+        Collection<ArtistDto> artistDtos = restArtistService.findByName(name);
 
         if (artistDtos.size() == 0) {
             ArtistDto artistDto = new ArtistDto();
@@ -61,7 +61,7 @@ public class ArtistController {
      * @param body JSON body of artist to create
      * @return Newly created artist or artist with error if JSON format was wrong
      */
-    @PostMapping("/add")
+    @PostMapping
     public ArtistDto addArtist(@Validated @RequestBody ArtistDto body, BindingResult result,
                                HttpServletResponse httpServletResponse) {
         if (result.hasErrors()) {
@@ -79,8 +79,8 @@ public class ArtistController {
      * @param body JSON-body with fields to update
      * @return Artist's updated fields or artist with error if no artist was found or JSON was in wrong format
      */
-    @PutMapping("/update")
-    public ArtistDto updateArtist(@RequestParam("id") UUID id, @RequestBody ArtistDto body, BindingResult result,
+    @PutMapping("{id}")
+    public ArtistDto updateArtist(@PathVariable UUID id, @RequestBody ArtistDto body, BindingResult result,
                                   HttpServletResponse httpServletResponse) {
 
         artistDtoValidator.validate(body, result);
@@ -104,8 +104,8 @@ public class ArtistController {
      * @param id Id to delete artist by
      * @return Empty artist with HTTP status of 204 or artist with error if artist was not found
      */
-    @DeleteMapping("/remove")
-    public ArtistDto removeArtist(@RequestParam("id") UUID id, HttpServletResponse httpServletResponse) {
+    @DeleteMapping("{id}")
+    public ArtistDto removeArtist(@PathVariable UUID id, HttpServletResponse httpServletResponse) {
         boolean deleted = restArtistService.removeArtist(id);
 
         ArtistDto artistDto = null;

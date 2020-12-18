@@ -33,4 +33,11 @@ public interface UserDAO extends GenericDAO<UUID, User> {
      * @return true - if user name is taken, else - false
      */
     boolean userNameExists(String login);
+
+    /**
+     * Delete operation for user by user name or email.
+     * @param query String to lookup
+     * @return Deleted user if successful, else - null
+     */
+    User deleteByUserNameOrEmail(String query);
 }

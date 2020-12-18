@@ -4,14 +4,14 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
 import ru.iteco.controller.dto.UserDto;
+import ru.iteco.dao.AlbumDAO;
+import ru.iteco.dao.ArtistDAO;
+import ru.iteco.dao.SongDAO;
+import ru.iteco.dao.UserDAO;
 import ru.iteco.model.Album;
 import ru.iteco.model.Artist;
 import ru.iteco.model.Song;
 import ru.iteco.model.User;
-import ru.iteco.service.AlbumService;
-import ru.iteco.service.ArtistService;
-import ru.iteco.service.SongService;
-import ru.iteco.service.UserService;
 
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -26,29 +26,29 @@ public class RestUserServiceImpl implements RestUserService {
 
     private static final Logger logger = LogManager.getLogger(RestUserServiceImpl.class.getName());
 
-    private final UserService userService;
-    private final SongService songService;
-    private final ArtistService artistService;
-    private final AlbumService albumService;
+    private final UserDAO userDAO;
+    private final SongDAO songDAO;
+    private final ArtistDAO artistDAO;
+    private final AlbumDAO albumDAO;
 
-    public RestUserServiceImpl(UserService userService, SongService songService, ArtistService artistService, AlbumService albumService) {
-        this.userService = userService;
-        this.songService = songService;
-        this.artistService = artistService;
-        this.albumService = albumService;
+    public RestUserServiceImpl(UserDAO userDAO, SongDAO songDAO, ArtistDAO artistDAO, AlbumDAO albumDAO) {
+        this.userDAO = userDAO;
+        this.songDAO = songDAO;
+        this.artistDAO = artistDAO;
+        this.albumDAO = albumDAO;
     }
 
     @Override
     public UserDto registerUser(UserDto userDto) {
         User user = new User(UUID.randomUUID(), userDto.getUserName(), userDto.getPassword(), userDto.getEmail());
-        userService.addUser(user);
+        userDAO.save(user);
         userDto.setId(user.getId());
         return userDto;
     }
 
     @Override
     public boolean updateUserInfo(String query, UserDto body) {
-        User user = userService.findByUserNameOrEmail(query);
+        User user = userDAO.findByUserNameOrEmail(query);
 
         if (user == null) return false;
 
@@ -64,32 +64,27 @@ public class RestUserServiceImpl implements RestUserService {
             user.setPasswordHash(body.getPassword());
         }
 
-        if (body.getFavouriteSongsIds() != null) {
-            user.setFavouriteSongs(body.getFavouriteSongsIds().stream()
-                    .map(songService::findById).collect(Collectors.toList())
-            );
-        }
+        user.setFavouriteSongs(body.getFavouriteSongsIds().stream()
+                .map(songDAO::getByKey).collect(Collectors.toList())
+        );
 
-        if (body.getFavouriteArtistsIds() != null) {
-            user.setFavouriteArtists(body.getFavouriteArtistsIds().stream()
-                    .map(artistService::findById).collect(Collectors.toList())
-            );
-        }
+        user.setFavouriteArtists(body.getFavouriteArtistsIds().stream()
+                .map(artistDAO::getByKey).collect(Collectors.toList())
+        );
 
-        if (body.getFavouriteAlbumsIds() != null) {
-            user.setFavouriteAlbums(body.getFavouriteAlbumsIds().stream()
-                    .map(albumService::findById).collect(Collectors.toList())
-            );
-        }
 
-        userService.updateUser(user);
+        user.setFavouriteAlbums(body.getFavouriteAlbumsIds().stream()
+                .map(albumDAO::getByKey).collect(Collectors.toList())
+        );
+
+        userDAO.update(user);
 
         return true;
     }
 
     @Override
     public UserDto findByUserNameOrEmail(String query) {
-        User user = userService.findByUserNameOrEmail(query);
+        User user = userDAO.findByUserNameOrEmail(query);
 
         if (user == null) {
             return null;
@@ -100,7 +95,7 @@ public class RestUserServiceImpl implements RestUserService {
 
     @Override
     public boolean removeUser(String query) {
-        User user = userService.deleteByUserNameOrEmail(query);
+        User user = userDAO.deleteByUserNameOrEmail(query);
 
         return user != null;
     }
