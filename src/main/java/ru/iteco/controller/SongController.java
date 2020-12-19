@@ -14,6 +14,7 @@ import ru.iteco.validator.SongDtoValidator;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -89,12 +90,16 @@ public class SongController {
             return body;
         }
 
-        body.setId(id);
-
-        if (!restSongService.updateSongInfo(body)) {
+        if (Objects.equals(id, body.getId())) {
+            if (!restSongService.updateSongInfo(body)) {
+                body.setErrors(Collections.singletonList(new ObjectError("songDto",
+                        new String[]{"song.notFound"}, null,
+                        "No song found with such id.")));
+            }
+        } else {
             body.setErrors(Collections.singletonList(new ObjectError("songDto",
-                    new String[]{"song.notFound"}, null,
-                    "No song found with such id.")));
+                    new String[]{"id.wrong"}, null,
+                    "Specified id should match body id.")));
         }
 
         return body;

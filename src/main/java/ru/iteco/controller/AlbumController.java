@@ -14,6 +14,7 @@ import ru.iteco.validator.AlbumDtoValidator;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -89,12 +90,16 @@ public class AlbumController {
             return body;
         }
 
-        body.setId(id);
-
-        if (!restAlbumService.updateAlbum(body)) {
+        if (Objects.equals(id, body.getId())) {
+            if (!restAlbumService.updateAlbum(body)) {
+                body.setErrors(Collections.singletonList(new ObjectError("albumDto",
+                        new String[]{"album.notFound"}, null,
+                        "No album found with such id.")));
+            }
+        } else {
             body.setErrors(Collections.singletonList(new ObjectError("albumDto",
-                    new String[]{"album.notFound"}, null,
-                    "No album found with such id.")));
+                    new String[]{"id.wrong"}, null,
+                    "Specified id should match body id.")));
         }
 
         return body;

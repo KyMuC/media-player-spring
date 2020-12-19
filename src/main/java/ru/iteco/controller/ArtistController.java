@@ -14,6 +14,7 @@ import ru.iteco.validator.ArtistDtoValidator;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -90,12 +91,16 @@ public class ArtistController {
             return body;
         }
 
-        body.setId(id);
-
-        if (!restArtistService.updateArtistInfo(body)) {
+        if (Objects.equals(id, body.getId())) {
+            if (!restArtistService.updateArtistInfo(body)) {
+                body.setErrors(Collections.singletonList(new ObjectError("artistDto",
+                        new String[]{"artist.notFound"}, null,
+                        "No artist found with such id.")));
+            }
+        } else {
             body.setErrors(Collections.singletonList(new ObjectError("artistDto",
-                    new String[]{"artist.notFound"}, null,
-                    "No artist found with such id.")));
+                    new String[]{"id.wrong"}, null,
+                    "Specified id should match body id.")));
         }
 
         return body;

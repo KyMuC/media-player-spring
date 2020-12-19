@@ -57,12 +57,13 @@ PUT: http://localhost:8080/api/v1/artist/<artist_id>
 Пример тела запроса:
 
     {
+        "id": "<artist_id>",
         "name": "Vance joy"
     }
 
 <artist_id> - id исполнителя, которого необходимо обновить
 
-В теле запроса могут присутствовать любые поля [ArtistDto][3], за исключением id.
+В теле запроса могут присутствовать любые поля [ArtistDto][3].
 
 DELETE: http://localhost:8080/api/v1/artist/<artist_id>
 
@@ -91,12 +92,13 @@ PUT: http://localhost:8080/api/v1/song/<song_id>
 Пример тела запроса:
 
     {
+        "id": "<song_id>",
         "name": "riptide"
     }
     
 <song_id> - id песни, которую необходимо обновить
 
-В теле запроса могут присутствовать любые поля [SongDto][4], за исключением id.
+В теле запроса могут присутствовать любые поля [SongDto][4].
 
 DELETE: http://localhost:8080/api/v1/song/<song_id>
 
@@ -129,12 +131,13 @@ PUT: http://localhost:8080/api/v1/album/<album_id>
 Пример тела запроса:
 
     {
+        "id": "<album_id>",
         "name": "God Loves You When You Are Dancing"
     }
     
 <album_id> - id альбома, который необходимо обновить
 
-В теле запроса могут присутствовать любые поля [AlbumDto][5], за исключением id и artistId.
+В теле запроса могут присутствовать любые поля [AlbumDto][5], за исключением artistId.
 
 DELETE: http://localhost:8080/api/v1/album/<album_id>
 
