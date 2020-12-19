@@ -1,5 +1,6 @@
 package ru.iteco.model;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
@@ -9,11 +10,39 @@ import java.util.UUID;
  */
 public class Artist implements Identifiable<UUID> {
 
+    /**
+     * Artist's identification.
+     */
     private UUID id;
+
+    /**
+     * Artist's name.
+     */
     private String name;
+
+    /**
+     * Artist's country of origin.
+     */
     private String countryOfOrigin;
-    private List<Song> songs;
-    private List<Album> albums;
+
+    /**
+     * Artist's songs.
+     */
+    private List<Song> songs = new ArrayList<>();
+
+    /**
+     * Artist's albums.
+     */
+    private List<Album> albums = new ArrayList<>();
+
+    public Artist() {
+    }
+
+    public Artist(UUID id, String name, String countryOfOrigin) {
+        this.id = id;
+        this.name = name;
+        this.countryOfOrigin = countryOfOrigin;
+    }
 
     public void setId(UUID id) {
         this.id = id;

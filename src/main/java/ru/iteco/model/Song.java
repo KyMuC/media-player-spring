@@ -8,8 +8,23 @@ import java.util.UUID;
  */
 public class Song implements Identifiable<UUID> {
 
+    /**
+     * Song's identification.
+     */
     private UUID id;
+
+    /**
+     * Song's name.
+     */
     private String name;
+
+    public Song() {
+    }
+
+    public Song(UUID id, String name) {
+        this.id = id;
+        this.name = name;
+    }
 
     public void setId(UUID id) {
         this.id = id;

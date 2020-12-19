@@ -1,5 +1,6 @@
 package ru.iteco.dao.map;
 
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Repository;
 import ru.iteco.dao.UserDAO;
 import ru.iteco.model.User;
@@ -7,13 +8,13 @@ import ru.iteco.model.User;
 import java.util.HashMap;
 import java.util.UUID;
 
+@Lazy
 @Repository
 public class UserDAOImpl extends AbstractDAO<UUID, User> implements UserDAO {
 
     public UserDAOImpl() {
         super(User.class, new HashMap<>());
     }
-
 
     @Override
     public User findByEmail(String email) {
@@ -33,7 +34,16 @@ public class UserDAOImpl extends AbstractDAO<UUID, User> implements UserDAO {
     }
 
     @Override
-    public boolean loginExists(String login) {
+    public boolean userNameExists(String login) {
         return items.values().stream().anyMatch(user -> user.getUserName().equals(login));
+    }
+
+    @Override
+    public User deleteByUserNameOrEmail(String query) {
+        User user = findByUserNameOrEmail(query);
+
+        if (user == null) return null;
+
+        return super.deleteByKey(user.getId());
     }
 }
